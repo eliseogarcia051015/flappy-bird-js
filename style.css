@@ -3,13 +3,23 @@
     margin: 0;
 }
 
+html, body {
+    height: 100%;
+}
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #game{
     width: 400px;
     height: 500px;
     border: 1px solid black;
-    margin: auto;
     overflow: hidden;
+    position: relative;
 }
+
 #block{
     width: 50px;
     height: 500px;
@@ -17,25 +27,26 @@
     position: relative;
     left: 400px;
     animation: block 2s infinite linear;
+    z-index: 1;
 }
-@keyframes block{
-    0%{left:400px}
-    100%{left: -50px;}
-}
+@keyframes block{ 0%{left:400px} 100%{left: -50px;} }
 #hole{
     width: 50px;
     height: 150px;
-    background-color: rgb(217, 11, 11);
+    background-color: rgb(202, 8, 8);
     position: relative;
     left: 400px;
-    top: -500px;
+    top: -200px;
     animation: block 2s infinite linear;
+    z-index: 2;
 }
+
 #character{
     width: 20px;
     height: 20px;
-    background-color: red;
+    background-color: rgb(0, 0, 0);
     position: absolute;
     top: 100px;
+    left: 50px; 
     border-radius: 50%;
 }
