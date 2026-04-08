@@ -5,7 +5,6 @@ var character = document.getElementById("character");
 var jumping = 0;
 var counter = 0;
 
-/* RANDOM HOLE */
 hole.addEventListener('animationiteration', () => {
     var random = Math.floor(Math.random() * 3);
     var top = (random * 100) + 100;
@@ -15,7 +14,7 @@ hole.addEventListener('animationiteration', () => {
 
 function resetGame(){
     counter = 0;
-    character.style.top = "100px";
+    character.style.top = "75px";
 
     block.style.animation = "none";
     hole.style.animation = "none";
@@ -33,7 +32,7 @@ function resetGame(){
 setInterval(function(){
     var characterTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
     if (jumping == 0){
-        character.style.top = (characterTop + 2) + "px";
+        character.style.top = (characterTop + 3.25) + "px";
     }
     if(characterTop < 0){
         character.style.top = "0px";
@@ -61,7 +60,7 @@ function jump (){
         var characterTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
 
         if(characterTop > 0){
-            character.style.top = (characterTop - 5) + "px";
+            character.style.top = (characterTop - 4) + "px";
         }
 
         if(jumpCount > 20){
