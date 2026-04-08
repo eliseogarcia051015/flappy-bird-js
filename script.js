@@ -1,28 +1,56 @@
 var block = document.getElementById("block");
 var hole = document.getElementById("hole");
 var character = document.getElementById("character");
+
 var jumping = 0;
 var counter = 0;
 
-hole.addEventListener('animationiteration', ()=> {
-    var random = Math.random()*3;
-    var top = (random*100)+150;
+/* RANDOM HOLE */
+hole.addEventListener('animationiteration', () => {
+    var random = Math.floor(Math.random() * 3);
+    var top = (random * 100) + 100;
     hole.style.top = -(top) + "px";
     counter++;
 });
+
+function resetGame(){
+    counter = 0;
+    character.style.top = "100px";
+
+    block.style.animation = "none";
+    hole.style.animation = "none";
+
+    block.style.left = "400px";
+    hole.style.left = "400px";
+
+    /* force reflow (restart animation) */
+    block.offsetHeight;
+
+    block.style.animation = "block 2s infinite linear";
+    hole.style.animation = "block 2s infinite linear";
+}
+
 setInterval(function(){
     var characterTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
     if (jumping == 0){
-        character.style.top = (characterTop+3)+"px";
+        character.style.top = (characterTop + 2) + "px";
+    }
+    if(characterTop < 0){
+        character.style.top = "0px";
     }
     var blockLeft = parseInt(window.getComputedStyle(block).getPropertyValue("left"));
     var holeTop = parseInt(window.getComputedStyle(hole).getPropertyValue("top"));
-    var characterTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
-    var cTop = -(500-characterTop);
-    if ((characterTop>480)||((blockLeft<20)&&(blockLeft>-50)&&((cTop<holeTop)||(cTop>holeTop+130)))){
-        alert("Game over. Score: "+counter);
-        character.style.top = 100 + "px";
-        counter=0;
+    var cTop = -(500 - characterTop);
+    if (
+        characterTop > 480 ||
+        (
+            blockLeft < 70 &&
+            blockLeft > 20 &&
+            (cTop < holeTop || cTop > holeTop + 130)
+        )
+    ){
+        alert("Game over. Score: " + counter);
+        resetGame();
     }
 }, 10);
 
@@ -31,14 +59,15 @@ function jump (){
     let jumpCount = 0; 
     var jumpInterval = setInterval(function(){
         var characterTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
-        if((characterTop>6)&&(counter < 15)){
-            character.style.top = (characterTop-5)+"px";
+
+        if(characterTop > 0){
+            character.style.top = (characterTop - 5) + "px";
         }
-        if(jumpCount >20){
+
+        if(jumpCount > 20){
             clearInterval(jumpInterval);
-            jumping=0;
-            jumpCount=0;
+            jumping = 0;
         }
         jumpCount++; 
-    }, 10)
+    }, 10);
 }
